@@ -1,13 +1,18 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"net"
+	"os"
+	"strings"
 )
 
-var domain string = "google.com"
-
 func main() {
+	fmt.Print("Name a website: ")
+	reader := bufio.NewReader(os.Stdin)
+	domain, _ := reader.ReadString('\n')
+	domain = strings.TrimSpace(domain)
 	// Resolve the domain name using the default DNS resolver
 	ips, err := net.LookupIP(domain)
 	if err != nil {
@@ -15,7 +20,7 @@ func main() {
 		return
 	}
 
-	// Print the IP addresses associated with the domain name
+	// Print the IP addresses with the domain name
 	for _, ip := range ips {
 		fmt.Println(domain, "->", ip)
 	}
